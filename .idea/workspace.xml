@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2e7498d6-28df-4ed1-98ca-ea23e4e5cfb5" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" afterPath="$PROJECT_DIR$/src/App.css" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" afterPath="$PROJECT_DIR$/src/index.css" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/components/PaymentForm.js" afterPath="$PROJECT_DIR$/src/components/PaymentForm.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,7 +29,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
@@ -48,8 +44,8 @@
       <file leaf-file-name="App.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="28" lean-forward="false" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+            <state relative-caret-position="493">
+              <caret line="29" column="1" lean-forward="false" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -65,13 +61,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymentForm.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PaymentForm.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/PaymentForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="79" column="26" lean-forward="false" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
+            <state relative-caret-position="478">
+              <caret line="215" column="9" lean-forward="true" selection-start-line="215" selection-start-column="9" selection-end-line="215" selection-end-column="9" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#944#1127#0" expanded="false" />
+                <element signature="e#1170#1547#0" expanded="false" />
+                <element signature="e#1586#1750#0" expanded="false" />
+                <element signature="e#1799#2029#0" expanded="false" />
+                <element signature="e#2079#2254#0" expanded="false" />
+                <element signature="e#2507#2775#0" expanded="false" />
+                <element signature="e#4080#5617#0" expanded="false" />
+                <element signature="e#5642#6289#0" expanded="false" />
+                <element signature="e#6314#7689#0" expanded="false" />
+                <element signature="e#7714#8486#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -104,10 +110,10 @@
       <list>
         <option value="$PROJECT_DIR$/src/reducers/rootReducer.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/components/PaymentForm.js" />
         <option value="$PROJECT_DIR$/src/index.css" />
-        <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/components/PaymentForm.js" />
       </list>
     </option>
   </component>
@@ -129,8 +135,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="489" />
-    <option name="y" value="361" />
+    <option name="x" value="317" />
+    <option name="y" value="36" />
     <option name="width" value="1506" />
     <option name="height" value="889" />
   </component>
@@ -163,6 +169,12 @@
               <item name="alpha_paymentform" type="b2602c69:ProjectViewProjectNode" />
               <item name="alpha_paymentform" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="alpha_paymentform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="alpha_paymentform" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -204,15 +216,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1534682732832</updated>
-      <workItem from="1534682734320" duration="6355000" />
+      <workItem from="1534682734320" duration="13516000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6355000" />
+    <option name="totallyTimeSpent" value="13516000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="489" y="361" width="1506" height="889" extended-state="0" />
+    <frame x="317" y="36" width="1506" height="889" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.249668" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -272,30 +284,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/PaymentForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="79" column="26" lean-forward="false" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="28" lean-forward="false" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="1" lean-forward="false" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/PaymentForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="215" column="9" lean-forward="true" selection-start-line="215" selection-start-column="9" selection-end-line="215" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#944#1127#0" expanded="false" />
+            <element signature="e#1170#1547#0" expanded="false" />
+            <element signature="e#1586#1750#0" expanded="false" />
+            <element signature="e#1799#2029#0" expanded="false" />
+            <element signature="e#2079#2254#0" expanded="false" />
+            <element signature="e#2507#2775#0" expanded="false" />
+            <element signature="e#4080#5617#0" expanded="false" />
+            <element signature="e#5642#6289#0" expanded="false" />
+            <element signature="e#6314#7689#0" expanded="false" />
+            <element signature="e#7714#8486#0" expanded="false" />
           </folding>
         </state>
       </provider>
