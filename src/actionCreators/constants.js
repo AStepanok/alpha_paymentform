@@ -8,4 +8,4 @@ export var actions =  {
     RESET_PAYMENT_INFO: 'RESET_PAYMENT_INFO'
 };
 
-export var API_URL = 'http://localhost:8084/api';
+export var API_URL = 'https://alpha.antonstepanok.com/api';

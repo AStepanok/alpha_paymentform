@@ -223,6 +223,7 @@ class PaymentForm extends Component {
                                 />
                                 <Input
                                     label='CVV'
+                                    type='number'
                                     mask='111'
                                     placeholder='000'
                                     value={cvv}

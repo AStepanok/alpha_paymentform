@@ -18,6 +18,7 @@ class App extends Component {
             <Alpha className='logo' size='xl' colored={true}/>
             <Popup
                 modal
+                position='top center'
                 open={paymentResponse.status !== undefined}
                 onClose={() => this.props.resetPaymentInfo()}
                 contentStyle={{width: '25%',
