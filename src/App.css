@@ -1,3 +1,10 @@
+.logo {
+  position: absolute;
+  font-size: 2rem;
+  left: 20px;
+  top: 20px;
+}
+
 .app {
   display: flex;
   justify-content: center;
@@ -29,6 +36,12 @@ h4 {
   margin: auto;
 }
 
+.popup-content {
+  padding: 10px 20px 30px !important;
+  border-radius: 5px;
+  margin-top: 100px !important;
+}
+
 @media screen and (max-width: 47.9375em) {
   .app {
     display: block;
@@ -40,5 +53,14 @@ h4 {
     padding: 12px;
     display: block;
     margin: 20px auto;
+  }
+
+  .logo {
+    position: relative;
+    display: block !important;
+    left: 0;
+    top: 0;
+    margin: 20px auto !important;
+    text-align: center;
   }
 }

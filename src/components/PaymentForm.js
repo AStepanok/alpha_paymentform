@@ -11,25 +11,58 @@ import Radio from 'arui-feather/radio';
 import CardInput from 'arui-feather/card-input';
 import Plate from 'arui-feather/plate';
 import InputGroup from 'arui-feather/input-group';
+import Spin from 'arui-feather/spin';
+
+import Visa from 'arui-feather/icon/brand/card-visa';
+import Mir from 'arui-feather/icon/brand/card-mir';
+import MasterCard from 'arui-feather/icon/brand/card-mastercard';
+
+import {changeAmount, changeCardNumber, changeCVV, changeExpirationDate, changeHolderName, sendPayment} from '../actionCreators/paymentFormActions';
 
 class PaymentForm extends Component {
     constructor(props) {
         super(props);
 
+        // wasClicked хранит информацию о том, были ли выбраны поля формы хотя бы один раз
+        // isFine - все ли в порядке с формой, если true, то кнопка отправки становится активной
+        // requestInProgrss - отправка платежа на сервер произошла, но ответ еще не получен
         this.state = {
-            amount: {
-                number: 0.0,
-                currency: 'rub'
-            },
             wasClicked: {},
-            cardNumber: '',
-            expiration: '',
-            cvv: '',
-            holderName: '',
-            isFine: false
+            isFine: false,
+            requestInProgress: false
         }
     }
 
+    // Этот метод нужен для проверки корректности формы после внесения изменений в какое либо из полей
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            isFine: this.checkIfFine(nextProps)
+        });
+    }
+
+    // Отправка формы на сервер
+    handleFormSubmit = (e) => {
+        e.preventDefault();
+        this.setState({
+            requestInProgress: true
+        }, function () {
+            this.props.sendPayment(this.props)
+            .then(() => {
+                this.setState({
+                    requestInProgress: false,
+                }, function () {
+                    if (this.props.paymentResponse.status === 'success') {
+                        this.setState({
+                            wasClicked:[],
+                            isFine: false
+                        })
+                    }
+                });
+            });
+        })
+    };
+
+    // Отслеживание клика по полю. Добавления поля в массив wasClicked
     handleInputBlur = (_id) => {
         const {wasClicked} = this.state;
         this.setState({
@@ -40,86 +73,57 @@ class PaymentForm extends Component {
         });
     };
 
+    // Отслеживание введения суммы платежа
     handleMoneyInputChange = (money) => {
-        const {amount} = this.state;
-        const moneyNumber = parseFloat(money.replace(/\s/g, '').replace(/,/g, '.'));
-        this.setState({
-            amount: {
-                ...amount,
-                number: money ? moneyNumber : 0
-            }
-        }, () =>
-            this.setState({
-                isFine: this.checkIfFine()
-            })
-        )
+        let moneyNumber = money.replace(/\s/g, '').replace(/,/g, '.');
+        if (this.props.amount.number === '0' && moneyNumber[moneyNumber.length-1] !== '.') {
+            moneyNumber = moneyNumber.substr(1);
+        }
+        this.props.changeAmount({number: money ? moneyNumber : '0'});
     };
 
+    // Отслеживание изменения валюты платежа
     handleCurrencyChange = (cur) => {
-        const {amount} = this.state;
-        this.setState({
-          amount: {
-              ...amount,
-              currency: cur
-          }
-        })
+        this.props.changeAmount({currency: cur});
     };
 
+    // Отслеживание изменения номера карты платежа
     handleCardNumberInputChange = (number) => {
         const cNumber = number.replace(/\s/g, '');
-        this.setState({
-            cardNumber: cNumber
-        }, () => {
-            this.setState({
-                isFine: this.checkIfFine()
-            })
-        })
+        this.props.changeCardNumber(cNumber);
     };
 
+    // Отслеживание изменения даты истечения срока действия карты
     handleExpirationDateInputChange = (exp) => {
-        this.setState({
-            expiration: exp
-        }, () => {
-            this.setState({
-                isFine: this.checkIfFine()
-            })
-        })
+        this.props.changeExpirationDate(exp);
     };
 
+    // Отслеживание изменения CVV кода карты
     handleCVVInputChange = (cvv) => {
-        this.setState({
-            cvv
-        }, () => {
-            this.setState({
-                isFine: this.checkIfFine()
-            })
-        })
+        this.props.changeCVV(cvv);
     };
 
+    // Отслеживание изменения имени владельца карты
     handleCardHolderNameInputChange = (name) => {
         if (name.split(' ').length<3) {
-            this.setState({
-                holderName: name.toUpperCase()
-            }, () => {
-                this.setState({
-                    isFine: this.checkIfFine()
-                })
-            })
+            this.props.changeHolderName(name.toUpperCase());
         }
     };
 
-    checkIfFine = () => {
-        const {amount, cardNumber, cvv, holderName} = this.state;
+    // Сама проверка возможности отправки платежа
+    checkIfFine = (nextProps) => {
+        const {amount, cardNumber, cvv, holderName} = nextProps;
         return amount.number > 0
             && (cardNumber.length === 16 || cardNumber.length === 18)
-            && this.checkExpirationDate()
+            && this.checkExpirationDate(nextProps)
             && cvv.length === 3
             && holderName.match(/^[a-zA-Z ]+$/)
             && holderName.split(' ').filter(s => s !== '').length === 2;
     };
 
-    checkExpirationDate = () => {
-        const {expiration} = this.state;
+    // Дополнительная функция для проверки срока истечения на корректность
+    checkExpirationDate = (props) => {
+        const {expiration} = props;
         let [month, year] = expiration.split('/');
         month = parseInt(month);
         year = parseInt(year) + 2000;
@@ -129,22 +133,44 @@ class PaymentForm extends Component {
     };
 
     render() {
-        const {amount, wasClicked, isFine, cardNumber, cvv, holderName} = this.state;
+        const {wasClicked, isFine, requestInProgress} = this.state;
+        const {amount, cardNumber, cvv, holderName, expiration} = this.props;
+
+        // Иконка платежной системы по первой цифре
+        let paymentIcon;
+        switch (cardNumber[0]) {
+            case '2':
+                paymentIcon = <Mir colored={true}/>;
+                break;
+            case '4':
+                paymentIcon = <Visa colored={true}/>;
+                break;
+            case '5':
+                paymentIcon = <MasterCard colored={true}/>;
+                break;
+            default:
+                paymentIcon = undefined
+        }
+
         return(
             <Plate>
                 <Form
-                    onSubmit={ () => { alert('Мы перезвоним вам в течение 5 минут'); } }
+                    onSubmit={this.handleFormSubmit}
                     footer={
-                        <Button size='m' view='extra' type='submit' disabled={!isFine}>Оплатить</Button>
+                        <Button icon={
+                            <Spin
+                                size='s'
+                                visible={requestInProgress}
+                            />
+                        } size='m' view='extra' type='submit' disabled={!isFine}>Оплатить</Button>
+
                     }>
                     <div className='form__body'>
                         <FormField>
                             <MoneyInput
                                 width='available'
                                 label='Сумма платежа'
-                                onChange={this.handleMoneyInputChange}
-                                onBlur={this.handleInputBlur.bind(this,'money')}
-                                error={ amount.number <= 0 && wasClicked.money ? 'Сумма платежа должна быть больше нуля' : null }
+                                value={amount.number}
                                 rightAddons={
                                     <RadioGroup type='button'>
                                         {
@@ -161,6 +187,9 @@ class PaymentForm extends Component {
                                         }
                                     </RadioGroup>
                                 }
+                                onChange={this.handleMoneyInputChange}
+                                onBlur={this.handleInputBlur.bind(this,'money')}
+                                error={ amount.number <= 0 && wasClicked.money ? 'Сумма платежа должна быть больше нуля' : null }
                             />
                         </FormField>
                         <FormField>
@@ -168,10 +197,14 @@ class PaymentForm extends Component {
                                 width='available'
                                 label='Номер карты'
                                 placeholder='1234 1234 1234 1234'
+                                value={cardNumber}
                                 error={ (cardNumber.length !== 16 && cardNumber.length !== 18)
                                 && wasClicked.card ? 'Номер карты должен состоять из 16 или 18 цифр' : null }
                                 onChange={this.handleCardNumberInputChange}
                                 onBlur={this.handleInputBlur.bind(this,'card')}
+                                rightAddons={
+                                    paymentIcon
+                                }
                             />
                         </FormField>
                         <FormField>
@@ -181,7 +214,8 @@ class PaymentForm extends Component {
                                     label='Срок действия'
                                     mask='11/11'
                                     placeholder='01/20'
-                                    error={!this.checkExpirationDate()
+                                    value={expiration}
+                                    error={!this.checkExpirationDate(this.props)
                                     && wasClicked.expiration ?
                                     'Срок действия введен неверно или карта больше недействительна' : null}
                                     onChange={this.handleExpirationDateInputChange}
@@ -191,6 +225,7 @@ class PaymentForm extends Component {
                                     label='CVV'
                                     mask='111'
                                     placeholder='000'
+                                    value={cvv}
                                     error={ cvv.length !== 3
                                     && wasClicked.cvv ? 'CVV код должен состоять из 3 цифр' : null }
                                     onChange={this.handleCVVInputChange}
@@ -213,15 +248,21 @@ class PaymentForm extends Component {
                     </div>
                 </Form>
             </Plate>
+
         )
     }
 }
 
+// Сопостовляем redux и props
 function mapStateToProps(reduxState) {
     return {
-        lang: reduxState.lang,
-        loggedIn: reduxState.loggedIn
+        amount: reduxState.amount,
+        cardNumber: reduxState.cardNumber,
+        cvv: reduxState.cvv,
+        holderName: reduxState.holderName,
+        expiration: reduxState.expiration,
+        paymentResponse: reduxState.paymentResponse
     }
 }
 
-export default connect(mapStateToProps)(PaymentForm);
+export default connect(mapStateToProps, {changeAmount, changeCardNumber, changeExpirationDate, changeCVV, changeHolderName, sendPayment})(PaymentForm);
